@@ -24,6 +24,9 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    // https://mvnrepository.com/artifact/com.h2database/h2
+    testImplementation("com.h2database:h2:2.1.214")
+
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
