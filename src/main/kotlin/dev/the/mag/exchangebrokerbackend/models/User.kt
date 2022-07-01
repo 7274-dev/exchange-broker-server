@@ -8,7 +8,6 @@ import javax.persistence.Id
 
 @Entity
 data class User(
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long,
@@ -17,7 +16,6 @@ data class User(
     var password: String,
     var email: String?,
     var admin: Boolean
-
 )
 
 fun User.toUserDto(): UserDto {
@@ -28,4 +26,3 @@ fun User.toUserDto(): UserDto {
         this.admin
     )
 }
-
