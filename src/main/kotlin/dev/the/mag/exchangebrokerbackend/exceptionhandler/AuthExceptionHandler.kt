@@ -2,7 +2,7 @@ package dev.the.mag.exchangebrokerbackend.exceptionhandler
 
 import dev.the.mag.exchangebrokerbackend.dto.ErrorDto
 import dev.the.mag.exchangebrokerbackend.exceptions.AccessDenied
-import dev.the.mag.exchangebrokerbackend.exceptions.AuthIncorrect
+import dev.the.mag.exchangebrokerbackend.exceptions.AuthInvalid
 import dev.the.mag.exchangebrokerbackend.exceptions.AuthMissing
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -15,8 +15,8 @@ class AuthExceptionHandler {
         return ErrorDto(HttpStatus.UNAUTHORIZED, e.message ?: "", e.message ?: "")
     }
 
-    @ExceptionHandler(AuthIncorrect::class)
-    fun handleAuthInvalid(e: AuthIncorrect): ErrorDto {
+    @ExceptionHandler(AuthInvalid::class)
+    fun handleAuthInvalid(e: AuthInvalid): ErrorDto {
         return ErrorDto(HttpStatus.UNAUTHORIZED, e.message ?: "", e.message ?: "")
     }
 
