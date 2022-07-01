@@ -12,7 +12,7 @@ data class User(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long,
 
-    var userName: String,
+    var username: String,
     var password: String,
     var email: String?,
     var admin: Boolean
@@ -21,7 +21,7 @@ data class User(
 fun User.toUserDto(): UserDto {
     return UserDto(
         this.id,
-        this.userName,
+        this.username,
         this.email,
         this.admin
     )
