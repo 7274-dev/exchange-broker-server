@@ -20,5 +20,4 @@ class UserService (
     fun getUser(username: String, password: String): User? {
         return userRepository.findByUsernameAndPassword(username, password)
     }
-
 }
