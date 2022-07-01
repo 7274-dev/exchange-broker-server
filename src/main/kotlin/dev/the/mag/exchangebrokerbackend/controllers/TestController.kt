@@ -16,4 +16,10 @@ class TestController {
     fun auth(): String {
         return "authenticated"
     }
+
+    @GetMapping("/admin")
+    @Authenticated(admin = true)
+    fun admin(): String {
+        return "admined"
+    }
 }
