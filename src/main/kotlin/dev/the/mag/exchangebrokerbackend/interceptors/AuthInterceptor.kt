@@ -1,6 +1,7 @@
 package dev.the.mag.exchangebrokerbackend.interceptors
 
 import dev.the.mag.exchangebrokerbackend.annotations.Authenticated
+import dev.the.mag.exchangebrokerbackend.exceptions.AuthMissing
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.method.HandlerMethod
@@ -17,16 +18,11 @@ class AuthInterceptor : HandlerInterceptor {
         if (handler !is HandlerMethod)
             return true
 
-        fun unauthorized(): Boolean {
-            response.status = 401
-            return false
-        }
-
         val needsAuth: Authenticated = handler.getMethodAnnotation(Authenticated::class.java) ?: return true
 
         logger.info("AuthInterceptor preHandle")
-        val username = request.getHeader("username") ?: return unauthorized()
-        val password = request.getHeader("password") ?: return unauthorized()
+        val username = request.getHeader("username") ?: throw AuthMissing()
+        val password = request.getHeader("password") ?: throw AuthMissing()
         logger.info("Passed AuthInterceptor with {} and {} ({})", username, password, needsAuth.admin)
 
         return true
