@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletResponse
 class AuthInterceptor : HandlerInterceptor {
     private val logger = LoggerFactory.getLogger(this.javaClass)
 
+    // TODO: Add checking if user actually exists
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         if (handler !is HandlerMethod)
             return true
 
-        fun fuckYou(): Boolean {
+        fun unauthorized(): Boolean {
             response.status = 401
             return false
         }
@@ -24,8 +25,8 @@ class AuthInterceptor : HandlerInterceptor {
         val needsAuth: Authenticated = handler.getMethodAnnotation(Authenticated::class.java) ?: return true
 
         logger.info("AuthInterceptor preHandle")
-        val username = request.getHeader("username") ?: return fuckYou()
-        val password = request.getHeader("password") ?: return fuckYou()
+        val username = request.getHeader("username") ?: return unauthorized()
+        val password = request.getHeader("password") ?: return unauthorized()
         logger.info("Passed AuthInterceptor with {} and {} ({})", username, password, needsAuth.admin)
 
         return true
