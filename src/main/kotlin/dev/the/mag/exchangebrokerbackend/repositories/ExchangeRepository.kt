@@ -4,4 +4,5 @@ import dev.the.mag.exchangebrokerbackend.models.Exchange
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ExchangeRepository : JpaRepository<Exchange, Long> {
+    fun getExchangeByCode(code: Int): Exchange?
 }

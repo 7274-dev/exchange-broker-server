@@ -16,7 +16,7 @@ data class User(
     var admin: Boolean
 )
 
-fun User.toUserDto(): UserDto {
+fun User.toDto(): UserDto {
     return UserDto(
         this.id,
         this.username,
