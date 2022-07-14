@@ -11,8 +11,7 @@ data class ExchangeParticipant (
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long,
-
         var userId: Long,
         var exchangeId: Long,
-        var stackId: Long,
+
 )
