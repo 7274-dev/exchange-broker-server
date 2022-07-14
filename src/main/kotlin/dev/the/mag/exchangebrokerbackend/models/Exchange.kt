@@ -13,5 +13,7 @@ data class Exchange(
     @Temporal(TemporalType.DATE)
     var openDate: Date,
     @Temporal(TemporalType.DATE)
-    var closeDate: Date
+    var closeDate: Date,
+
+    var code: Int
 )
