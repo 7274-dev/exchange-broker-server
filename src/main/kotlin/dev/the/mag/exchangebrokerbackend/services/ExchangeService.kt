@@ -3,6 +3,7 @@ package dev.the.mag.exchangebrokerbackend.services
 import dev.the.mag.exchangebrokerbackend.dto.ExchangeDto
 import dev.the.mag.exchangebrokerbackend.exceptions.NoSuchExchangeException
 import dev.the.mag.exchangebrokerbackend.models.Exchange
+import dev.the.mag.exchangebrokerbackend.models.ExchangeItem
 import dev.the.mag.exchangebrokerbackend.models.ExchangeParticipant
 import dev.the.mag.exchangebrokerbackend.models.toDto
 import dev.the.mag.exchangebrokerbackend.repositories.ExchangeItemRepository
@@ -62,6 +63,14 @@ class ExchangeService (
         exchangeItemRepository.deleteAllInBatch(items ?: listOf())
         exchangeParticipantRepository.deleteAllInBatch(participants ?: listOf())
         exchangeRepository.delete(exchange)
+    }
+
+    fun getSoldItemsForExchange(exchangeId: Long): List<ExchangeItem> {
+        return exchangeItemRepository.findAllBySoldAndExchangeId(exchangeId) ?: return listOf()
+    }
+
+    fun getSoldItemsForExchangeAndUser(exchangeId: Long, userId: Long): List<ExchangeItem> {
+        return exchangeItemRepository.findAllBySoldAndExchangeIdAndOwnerId(exchangeId, userId) ?: return listOf()
     }
 
 }
