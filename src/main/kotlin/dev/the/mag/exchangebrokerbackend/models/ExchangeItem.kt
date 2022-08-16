@@ -10,6 +10,8 @@ data class ExchangeItem(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long,
+    var ownerId: Long,
+    var exchangeId: Long,
     var name: String,
     var desc: String,
     var price: Int,
