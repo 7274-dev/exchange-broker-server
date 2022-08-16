@@ -6,7 +6,7 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 
 @Entity
-data class ExchangeItem(
+data class ExchangeItem (
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long,
@@ -18,5 +18,6 @@ data class ExchangeItem(
     var soldFor: Int?,
     var pending: Boolean,
     var earningPercent: Int,
-    var giveToCharity: Boolean
+    var giveToCharity: Boolean,
+    var recall: Boolean
 )
