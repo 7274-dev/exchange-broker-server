@@ -48,7 +48,8 @@ class ExchangeService (
         var exchange = exchangeRepository.getExchangeByCode(exchangeCode) ?: throw NoSuchExchangeException()
         var exchangeParticipant = ExchangeParticipant(-1, userId, exchange.id)
     }
-
+    // What do we want to do when user leaves the exchange and still has unsold items?
+    // TODO: Add option to also flag all unsold items for recall
     fun leaveExchange(exchangeId: Long, userId: Long) {
         var exchangeParticipant = exchangeParticipantRepository.getExchangeParticipantByExchangeIdAndUserId(exchangeId, userId) ?: throw NoSuchExchangeException()
         exchangeParticipantRepository.deleteById(exchangeParticipant.id)

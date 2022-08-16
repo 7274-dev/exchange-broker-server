@@ -2,7 +2,7 @@ package dev.the.mag.exchangebrokerbackend.controllers
 
 import dev.the.mag.exchangebrokerbackend.annotations.Authenticated
 import dev.the.mag.exchangebrokerbackend.dto.UserDto
-import dev.the.mag.exchangebrokerbackend.models.toUserDto
+import dev.the.mag.exchangebrokerbackend.models.toDto
 import dev.the.mag.exchangebrokerbackend.request.RequestUser
 import dev.the.mag.exchangebrokerbackend.services.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,6 +29,6 @@ class AuthController (
     @PostMapping("/signup")
     fun signUp(@RequestBody user: RequestUser): ResponseEntity<UserDto> {
         val createdUser = userService.createNewUser(user.username, user.password, false, user.email);
-        return ResponseEntity(createdUser.toUserDto(), HttpStatus.OK)
+        return ResponseEntity(createdUser.toDto(), HttpStatus.OK)
     }
 }
