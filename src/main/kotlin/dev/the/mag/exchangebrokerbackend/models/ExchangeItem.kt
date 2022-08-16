@@ -1,5 +1,6 @@
 package dev.the.mag.exchangebrokerbackend.models
 
+import dev.the.mag.exchangebrokerbackend.dto.ExchangeItemDto
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -12,12 +13,20 @@ data class ExchangeItem (
     var id: Long,
     var ownerId: Long,
     var exchangeId: Long,
+
     var name: String,
     var desc: String,
     var price: Int,
+
     var soldFor: Int?,
-    var pending: Boolean,
+    var pending: Boolean?,
+
     var earningPercent: Int,
     var giveToCharity: Boolean,
-    var recall: Boolean
+
+    var recall: Boolean,
 )
+
+fun ExchangeItem.toDto(): ExchangeItemDto {
+    return ExchangeItemDto(ownerId, exchangeId, name, desc, price, soldFor, pending, earningPercent, giveToCharity, recall)
+}

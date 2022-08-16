@@ -40,9 +40,8 @@ class ExchangeService (
         return exchange.toDto()
     }
 
-    fun getExchange(exchangeId: Long): ExchangeDto {
-        var exchange = exchangeRepository.getReferenceById(exchangeId)
-        return exchange.toDto()
+    fun getExchange(exchangeId: Long): Exchange {
+        return exchangeRepository.getReferenceById(exchangeId)
     }
 
     fun joinExchange(exchangeCode: Int, userId: Long) {
