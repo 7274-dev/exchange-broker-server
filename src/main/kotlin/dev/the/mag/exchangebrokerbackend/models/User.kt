@@ -4,7 +4,7 @@ import dev.the.mag.exchangebrokerbackend.dto.UserDto
 import javax.persistence.*
 
 @Entity
-@Table(name = "exchage_user")
+@Table(name = "exchange_user")
 data class User(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
