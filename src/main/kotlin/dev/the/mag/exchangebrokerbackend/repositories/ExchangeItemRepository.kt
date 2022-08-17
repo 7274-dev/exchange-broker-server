@@ -6,5 +6,4 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface ExchangeItemRepository : JpaRepository<ExchangeItem, Long> {
 
     fun findAllByExchangeId(exchangeId: Long): List<ExchangeItem>?
-
 }

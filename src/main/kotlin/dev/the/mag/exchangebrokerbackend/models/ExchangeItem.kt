@@ -16,9 +16,9 @@ data class ExchangeItem (
 
     var name: String,
     var desc: String,
-    var price: Int,
+    var price: Double,
 
-    var soldFor: Int?,
+    var soldFor: Double?,
     var pending: Boolean?,
 
     var earningPercent: Int,
