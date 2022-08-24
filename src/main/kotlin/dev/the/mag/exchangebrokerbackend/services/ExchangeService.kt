@@ -70,16 +70,15 @@ class ExchangeService (
         exchangeRepository.delete(exchange)
     }
 
-<<<<<<< HEAD
     fun getSoldItemsForExchange(exchangeId: Long): List<ExchangeItem> {
         return exchangeItemRepository.findAllBySoldAndExchangeId(exchangeId) ?: return listOf()
     }
 
     fun getSoldItemsForExchangeAndUser(exchangeId: Long, userId: Long): List<ExchangeItem> {
         return exchangeItemRepository.findAllBySoldAndExchangeIdAndOwnerId(exchangeId, userId) ?: return listOf()
-=======
+    }
     fun getActiveExchangesByUser(userId: Long): List<Exchange> {
-        val today = LocalDate.now() as Date
+        val today = LocalDate.now()
         return exchangeRepository.getExchangesByOwnerIdAndCloseDateIsBefore(userId, today)
     }
 
@@ -89,7 +88,7 @@ class ExchangeService (
 
     fun getAllExchanges(): List<Exchange> {
         return exchangeRepository.findAll()
->>>>>>> a92dcab991519706276e558d43a645fcfc054020
+
     }
 
 }

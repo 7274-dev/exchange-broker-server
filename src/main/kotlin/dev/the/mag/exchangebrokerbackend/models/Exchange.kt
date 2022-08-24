@@ -15,7 +15,6 @@ data class Exchange(
     var ownerId: Long,
 
     var openDate: LocalDate,
-
     var closeDate: LocalDate,
 
     var code: Int
