@@ -1,6 +1,5 @@
 package dev.the.mag.exchangebrokerbackend.controllers
 
-import dev.the.mag.exchangebrokerbackend.annotations.Authenticated
 import dev.the.mag.exchangebrokerbackend.dto.UserDto
 import dev.the.mag.exchangebrokerbackend.models.toDto
 import dev.the.mag.exchangebrokerbackend.request.RequestUser
@@ -13,22 +12,21 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+@RequestMapping("/api/auth")
 @RestController
-@RequestMapping("/api")
 class AuthController (
     @Autowired
-    val userService: UserService
-    ) {
-
-    @PostMapping("/signin")
-    @Authenticated
-    fun signIn(): ResponseEntity<String> {
-        return ResponseEntity("OK", HttpStatus.OK)
+    private val userService: UserService
+) {
+    @PostMapping("/basic")
+    fun createUser(@RequestBody user: RequestUser): ResponseEntity<UserDto> {
+        val user = userService.createUser(user.username, user.password, false, user.email)
+        return ResponseEntity(user.toDto(), HttpStatus.OK)
     }
 
-    @PostMapping("/signup")
-    fun signUp(@RequestBody user: RequestUser): ResponseEntity<UserDto> {
-        val createdUser = userService.createNewUser(user.username, user.password, false, user.email);
-        return ResponseEntity(createdUser.toDto(), HttpStatus.OK)
+    @PostMapping("/admin")
+    fun createAdmin(@RequestBody user: RequestUser): ResponseEntity<UserDto> {
+        val user = userService.createUser(user.username, user.password, true, user.email)
+        return ResponseEntity(user.toDto(), HttpStatus.OK)
     }
 }

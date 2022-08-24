@@ -12,6 +12,7 @@ import dev.the.mag.exchangebrokerbackend.repositories.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 import java.util.Date
 
 @Service
@@ -43,6 +44,10 @@ class ExchangeService (
         return exchangeRepository.getReferenceById(exchangeId)
     }
 
+    fun getExchangeByCode(exchangeCode: Int): Exchange {
+        return exchangeRepository.getExchangeByCode(exchangeCode) ?: throw NoSuchExchangeException()
+    }
+
     fun joinExchange(exchangeCode: Int, userId: Long) {
         var exchange = exchangeRepository.getExchangeByCode(exchangeCode) ?: throw NoSuchExchangeException()
         var exchangeParticipant = ExchangeParticipant(-1, userId, exchange.id)
@@ -62,6 +67,19 @@ class ExchangeService (
         exchangeItemRepository.deleteAllInBatch(items ?: listOf())
         exchangeParticipantRepository.deleteAllInBatch(participants ?: listOf())
         exchangeRepository.delete(exchange)
+    }
+
+    fun getActiveExchangesByUser(userId: Long): List<Exchange> {
+        val today = LocalDate.now() as Date
+        return exchangeRepository.getExchangesByOwnerIdAndCloseDateIsBefore(userId, today)
+    }
+
+    fun getAllExchangesByUser(userId: Long): List<Exchange> {
+        return exchangeRepository.getExchangesByOwnerId(userId)
+    }
+
+    fun getAllExchanges(): List<Exchange> {
+        return exchangeRepository.findAll()
     }
 
 }
