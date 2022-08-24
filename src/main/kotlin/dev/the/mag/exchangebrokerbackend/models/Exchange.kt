@@ -1,6 +1,7 @@
 package dev.the.mag.exchangebrokerbackend.models
 
 import dev.the.mag.exchangebrokerbackend.dto.ExchangeDto
+import java.time.LocalDate
 import java.util.Date
 import javax.persistence.*
 
@@ -12,10 +13,10 @@ data class Exchange(
     var id: Long,
     var name: String,
     var ownerId: Long,
-    @Temporal(TemporalType.DATE)
-    var openDate: Date,
-    @Temporal(TemporalType.DATE)
-    var closeDate: Date,
+
+    var openDate: LocalDate,
+
+    var closeDate: LocalDate,
 
     var code: Int
 )

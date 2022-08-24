@@ -3,6 +3,7 @@ package dev.the.mag.exchangebrokerbackend.services
 import dev.the.mag.exchangebrokerbackend.dto.ExchangeDto
 import dev.the.mag.exchangebrokerbackend.exceptions.NoSuchExchangeException
 import dev.the.mag.exchangebrokerbackend.models.Exchange
+import dev.the.mag.exchangebrokerbackend.models.ExchangeItem
 import dev.the.mag.exchangebrokerbackend.models.ExchangeParticipant
 import dev.the.mag.exchangebrokerbackend.models.toDto
 import dev.the.mag.exchangebrokerbackend.repositories.ExchangeItemRepository
@@ -13,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDate
-import java.util.Date
+
 
 @Service
 class ExchangeService (
@@ -27,7 +28,7 @@ class ExchangeService (
     private val exchangeParticipantRepository: ExchangeParticipantRepository,
         ) {
 
-    fun createExchange(name: String, ownerId: Long, openDate: Date, closeDate: Date): ExchangeDto {
+    fun createExchange(name: String, ownerId: Long, openDate: LocalDate, closeDate: LocalDate): ExchangeDto {
 
         var code = (100000..999999).random()
 
@@ -69,6 +70,14 @@ class ExchangeService (
         exchangeRepository.delete(exchange)
     }
 
+<<<<<<< HEAD
+    fun getSoldItemsForExchange(exchangeId: Long): List<ExchangeItem> {
+        return exchangeItemRepository.findAllBySoldAndExchangeId(exchangeId) ?: return listOf()
+    }
+
+    fun getSoldItemsForExchangeAndUser(exchangeId: Long, userId: Long): List<ExchangeItem> {
+        return exchangeItemRepository.findAllBySoldAndExchangeIdAndOwnerId(exchangeId, userId) ?: return listOf()
+=======
     fun getActiveExchangesByUser(userId: Long): List<Exchange> {
         val today = LocalDate.now() as Date
         return exchangeRepository.getExchangesByOwnerIdAndCloseDateIsBefore(userId, today)
@@ -80,6 +89,7 @@ class ExchangeService (
 
     fun getAllExchanges(): List<Exchange> {
         return exchangeRepository.findAll()
+>>>>>>> a92dcab991519706276e558d43a645fcfc054020
     }
 
 }
