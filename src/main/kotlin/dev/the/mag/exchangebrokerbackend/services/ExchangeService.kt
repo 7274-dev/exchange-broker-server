@@ -13,7 +13,8 @@ import dev.the.mag.exchangebrokerbackend.repositories.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import java.util.Date
+import java.time.LocalDate
+
 
 @Service
 class ExchangeService (
@@ -27,7 +28,7 @@ class ExchangeService (
     private val exchangeParticipantRepository: ExchangeParticipantRepository,
         ) {
 
-    fun createExchange(name: String, ownerId: Long, openDate: Date, closeDate: Date): ExchangeDto {
+    fun createExchange(name: String, ownerId: Long, openDate: LocalDate, closeDate: LocalDate): ExchangeDto {
 
         var code = (100000..999999).random()
 
