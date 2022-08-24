@@ -33,6 +33,8 @@ class AuthInterceptor(
         val user = userService.getUser(username, password) ?: throw AuthInvalid()
         if (needsAuth.admin && !user.admin) throw AccessDenied()
 
+
+
         return true
     }
 }
