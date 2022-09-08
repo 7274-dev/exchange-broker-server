@@ -13,4 +13,5 @@ interface ExchangeItemRepository : JpaRepository<ExchangeItem, Long> {
 
     @Query("SELECT e FROM ExchangeItem e WHERE e.exchangeId = ?1 AND e.ownerId = ?2")
     fun findAllBySoldAndExchangeIdAndOwnerId(exchangeId: Long, ownerId: Long): List<ExchangeItem>?
+    fun findAllByOwnerIdAndExchangeId(ownerId: Long, exchangeId: Long): List<ExchangeItem>
 }
