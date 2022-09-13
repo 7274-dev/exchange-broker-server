@@ -10,15 +10,15 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
-class ItemService (
+class ItemService(
     @Autowired
     private val itemRepository: ExchangeItemRepository
-    ) {
+) {
 
     // TODO: Maybe add convenience functions to change just one filed of the item?
-                                                                                                // TODO: Add constrains to be <80%
+    // TODO: Add constrains to be <80%
     fun createItem(ownerId: Long, exchangeId: Long, name: String, desc: String, price: Double, earningPercent: Int, giveToCharity: Boolean): ExchangeItemDto {
-        val model = ExchangeItem(-1, ownerId, exchangeId, name, desc, price, soldFor = null, pending = false, earningPercent, giveToCharity, recall = false )
+        val model = ExchangeItem(-1, ownerId, exchangeId, name, desc, price, soldFor = null, pending = false, earningPercent, giveToCharity, recall = false)
         itemRepository.save(model)
         return model.toDto()
     }
@@ -84,5 +84,4 @@ class ItemService (
         // OP unsuccessful - already approved
         return false
     }
-
 }

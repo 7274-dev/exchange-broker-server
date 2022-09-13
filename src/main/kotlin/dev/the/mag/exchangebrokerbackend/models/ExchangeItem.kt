@@ -7,7 +7,7 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 
 @Entity
-data class ExchangeItem (
+data class ExchangeItem(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long,

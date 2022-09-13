@@ -12,5 +12,4 @@ class UserExceptionHandler {
     fun handleUserNotFound(e: NoSuchUserException): ResponseEntity<String> {
         return ResponseEntity(e.message ?: "", HttpStatus.NOT_FOUND)
     }
-
 }

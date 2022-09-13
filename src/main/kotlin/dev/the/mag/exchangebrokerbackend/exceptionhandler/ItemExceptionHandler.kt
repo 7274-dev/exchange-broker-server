@@ -13,5 +13,4 @@ class ItemExceptionHandler {
     fun handleNoSuchItemException(e: NoSuchItemException): ResponseEntity<String> {
         return ResponseEntity(e.message ?: "", HttpStatus.NOT_FOUND)
     }
-
 }

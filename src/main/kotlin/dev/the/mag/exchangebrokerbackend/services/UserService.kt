@@ -1,29 +1,26 @@
 package dev.the.mag.exchangebrokerbackend.services
 
 import dev.the.mag.exchangebrokerbackend.exceptions.NoSuchUserException
-import dev.the.mag.exchangebrokerbackend.models.Exchange
 import dev.the.mag.exchangebrokerbackend.models.User
 import dev.the.mag.exchangebrokerbackend.repositories.ExchangeRepository
 import dev.the.mag.exchangebrokerbackend.repositories.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import java.time.LocalDate
-import java.util.Date
 
 @Service
-class UserService (
+class UserService(
     @Autowired
     private val userRepository: UserRepository,
     @Autowired
     private val exchangeRepository: ExchangeRepository
-    ) {
+) {
 
     // TODO: Add hashing to passwords
     fun createUser(username: String, password: String, isAdmin: Boolean, email: String?): User {
-        var user = User(-1, username, password, email, isAdmin);
-        userRepository.save(user);
-        return user;
+        var user = User(-1, username, password, email, isAdmin)
+        userRepository.save(user)
+        return user
     }
 
     fun getUser(username: String, password: String): User? {
@@ -46,8 +43,8 @@ class UserService (
             user.email = email
         }
 
-        userRepository.save(user);
-        return user;
+        userRepository.save(user)
+        return user
     }
 
     fun deleteUser(userId: Long): Boolean {
@@ -59,7 +56,4 @@ class UserService (
     fun getUserByUsername(username: String): User {
         return userRepository.findUserByUsername(username)
     }
-
-
-
 }

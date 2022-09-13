@@ -1,6 +1,7 @@
 package dev.the.mag.exchangebrokerbackend.services
 
 import dev.the.mag.exchangebrokerbackend.dto.ExchangeDto
+import dev.the.mag.exchangebrokerbackend.dto.ExchangeParticipantDto
 import dev.the.mag.exchangebrokerbackend.exceptions.NoSuchExchangeException
 import dev.the.mag.exchangebrokerbackend.models.Exchange
 import dev.the.mag.exchangebrokerbackend.models.ExchangeItem
@@ -14,10 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDate
-
+import java.time.ZoneId
+import java.util.*
 
 @Service
-class ExchangeService (
+class ExchangeService(
     @Autowired
     private val userRepository: UserRepository,
     @Autowired
@@ -26,18 +28,40 @@ class ExchangeService (
     private val exchangeItemRepository: ExchangeItemRepository,
     @Autowired
     private val exchangeParticipantRepository: ExchangeParticipantRepository,
-        ) {
+) {
 
-    fun createExchange(name: String, ownerId: Long, openDate: LocalDate, closeDate: LocalDate): ExchangeDto {
-
+    private fun getUniqueExchangeCode(): Int {
         var code = (100000..999999).random()
 
         while (exchangeRepository.getExchangeByCode(code) != null) {
             code = (100000..999999).random()
         }
 
-        var exchange = Exchange(-1, name, ownerId, openDate, closeDate, code)
+        return code
+    }
+
+    fun createExchange(name: String, ownerId: Long, openDate: Date, closeDate: Date): ExchangeDto {
+        val code = getUniqueExchangeCode()
+
+        val opening = openDate.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+
+        val closing = closeDate.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+
+        val exchange = Exchange(
+            -1,
+            name,
+            ownerId,
+            opening,
+            closing,
+            code
+        )
+
         exchangeRepository.save(exchange)
+
         return exchange.toDto()
     }
 
@@ -49,21 +73,27 @@ class ExchangeService (
         return exchangeRepository.getExchangeByCode(exchangeCode) ?: throw NoSuchExchangeException()
     }
 
-    fun joinExchange(exchangeCode: Int, userId: Long) {
-        var exchange = exchangeRepository.getExchangeByCode(exchangeCode) ?: throw NoSuchExchangeException()
-        var exchangeParticipant = ExchangeParticipant(-1, userId, exchange.id)
+    fun joinExchange(exchangeCode: Int, userId: Long): ExchangeParticipantDto {
+        val exchange = exchangeRepository.getExchangeByCode(exchangeCode) ?: throw NoSuchExchangeException()
+        val exchangeParticipant = ExchangeParticipant(-1, userId, exchange.id)
+
+        val joinedParticipant = exchangeParticipantRepository.getExchangeParticipantByExchangeIdAndUserId(exchange.id, userId)
+            ?: exchangeParticipantRepository.save(exchangeParticipant)
+
+        return joinedParticipant.toDto()
     }
+
     // What do we want to do when user leaves the exchange and still has unsold items?
     // TODO: Add option to also flag all unsold items for recall
     fun leaveExchange(exchangeId: Long, userId: Long) {
-        var exchangeParticipant = exchangeParticipantRepository.getExchangeParticipantByExchangeIdAndUserId(exchangeId, userId) ?: throw NoSuchExchangeException()
+        val exchangeParticipant = exchangeParticipantRepository.getExchangeParticipantByExchangeIdAndUserId(exchangeId, userId) ?: throw NoSuchExchangeException()
         exchangeParticipantRepository.deleteById(exchangeParticipant.id)
     }
 
     fun deleteExchange(exchangeId: Long) {
-        var exchange = exchangeRepository.findByIdOrNull(exchangeId) ?: throw NoSuchExchangeException()
-        var participants = exchangeParticipantRepository.getAllByExchangeId(exchangeId)
-        var items = exchangeItemRepository.findAllByExchangeId(exchangeId)?.filter { it.soldFor != null }
+        val exchange = exchangeRepository.findByIdOrNull(exchangeId) ?: throw NoSuchExchangeException()
+        val participants = exchangeParticipantRepository.getAllByExchangeId(exchangeId)
+        val items = exchangeItemRepository.findAllByExchangeId(exchangeId)?.filter { it.soldFor != null }
 
         exchangeItemRepository.deleteAllInBatch(items ?: listOf())
         exchangeParticipantRepository.deleteAllInBatch(participants ?: listOf())
@@ -88,7 +118,5 @@ class ExchangeService (
 
     fun getAllExchanges(): List<Exchange> {
         return exchangeRepository.findAll()
-
     }
-
 }

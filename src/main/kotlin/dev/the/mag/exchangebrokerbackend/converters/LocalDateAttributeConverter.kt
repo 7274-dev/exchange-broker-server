@@ -1,7 +1,7 @@
 package dev.the.mag.exchangebrokerbackend.converters
 
-import java.time.LocalDate
 import java.sql.Date
+import java.time.LocalDate
 import javax.persistence.AttributeConverter
 import javax.persistence.Converter
 
@@ -14,6 +14,4 @@ class LocalDateAttributeConverter : AttributeConverter<LocalDate, Date> {
     override fun convertToEntityAttribute(dbData: Date?): LocalDate? {
         return dbData?.toLocalDate()
     }
-
-
 }

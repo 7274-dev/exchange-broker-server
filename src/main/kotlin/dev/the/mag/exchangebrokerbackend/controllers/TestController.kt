@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
-import java.util.Calendar
 import java.util.Date
 
 @RestController
@@ -33,5 +32,4 @@ class TestController {
         val date = LocalDate.now() as Date
         return ResponseEntity(date, HttpStatus.OK)
     }
-
 }

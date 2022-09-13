@@ -1,6 +1,5 @@
 package dev.the.mag.exchangebrokerbackend.exceptionhandler
 
-import dev.the.mag.exchangebrokerbackend.dto.ErrorDto
 import dev.the.mag.exchangebrokerbackend.exceptions.AccessDenied
 import dev.the.mag.exchangebrokerbackend.exceptions.AuthInvalid
 import dev.the.mag.exchangebrokerbackend.exceptions.AuthMissing

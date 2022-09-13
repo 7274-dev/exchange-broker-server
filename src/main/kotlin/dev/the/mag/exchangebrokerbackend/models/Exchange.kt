@@ -2,7 +2,6 @@ package dev.the.mag.exchangebrokerbackend.models
 
 import dev.the.mag.exchangebrokerbackend.dto.ExchangeDto
 import java.time.LocalDate
-import java.util.Date
 import javax.persistence.*
 
 // stall

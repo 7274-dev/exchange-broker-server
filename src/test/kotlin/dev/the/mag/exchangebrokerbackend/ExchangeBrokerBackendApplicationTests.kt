@@ -9,5 +9,4 @@ class ExchangeBrokerBackendApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }
