@@ -56,9 +56,9 @@ class ExchangeController(
         return ResponseEntity(exchangeService.createExchange(exchange.name, user.id, exchange.openDate, exchange.closeDate), HttpStatus.OK)
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("/{exchangeId}")
     @Authenticated
-    fun deleteExchange(@RequestHeader username: String, @RequestParam exchangeId: Long): ResponseEntity<Boolean> {
+    fun deleteExchange(@RequestHeader username: String, @PathVariable exchangeId: Long): ResponseEntity<Boolean> {
 
         val user = userService.getUserByUsername(username)
         val exchange = exchangeService.getExchange(exchangeId)
@@ -70,9 +70,9 @@ class ExchangeController(
         return ResponseEntity(true, HttpStatus.OK)
     }
 
-    @GetMapping("")
+    @GetMapping("/{exchangeId}")
     @Authenticated
-    fun getExchange(@RequestHeader username: String, @RequestParam exchangeId: Long): ResponseEntity<ExchangeDto> {
+    fun getExchange(@RequestHeader username: String, @PathVariable exchangeId: Long): ResponseEntity<ExchangeDto> {
 
         val user = userService.getUserByUsername(username)
         val exchange = exchangeService.getExchange(exchangeId)
