@@ -4,7 +4,6 @@ import dev.the.mag.exchangebrokerbackend.annotations.Authenticated
 import dev.the.mag.exchangebrokerbackend.exceptions.AccessDenied
 import dev.the.mag.exchangebrokerbackend.exceptions.AuthInvalid
 import dev.the.mag.exchangebrokerbackend.exceptions.AuthMissing
-import dev.the.mag.exchangebrokerbackend.repositories.UserRepository
 import dev.the.mag.exchangebrokerbackend.services.UserService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -32,8 +31,6 @@ class AuthInterceptor(
 
         val user = userService.getUser(username, password) ?: throw AuthInvalid()
         if (needsAuth.admin && !user.admin) throw AccessDenied()
-
-
 
         return true
     }

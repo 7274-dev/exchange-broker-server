@@ -1,7 +1,6 @@
 package dev.the.mag.exchangebrokerbackend.dto
 
-
-data class ExchangeItemDto (
+data class ExchangeItemDto(
     var ownerId: Long,
     var exchangeId: Long,
 
@@ -17,4 +16,3 @@ data class ExchangeItemDto (
 
     var recall: Boolean,
 )
-

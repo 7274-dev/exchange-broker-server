@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController
 
 @RequestMapping("/api/auth")
 @RestController
-class AuthController (
+class AuthController(
     @Autowired
     private val userService: UserService
 ) {
-    @PostMapping("/basic")
+    @PostMapping("/user")
     fun createUser(@RequestBody user: RequestUser): ResponseEntity<UserDto> {
         val user = userService.createUser(user.username, user.password, false, user.email)
         return ResponseEntity(user.toDto(), HttpStatus.OK)

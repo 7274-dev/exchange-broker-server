@@ -19,5 +19,4 @@ class ExchangeExceptionHandler {
     fun handleTooManyExchangesException(e: TooManyExchanges): ResponseEntity<String> {
         return ResponseEntity(e.message ?: "", HttpStatus.NOT_ACCEPTABLE)
     }
-
 }
